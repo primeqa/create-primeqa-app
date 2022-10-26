@@ -102,6 +102,9 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
                 "service_token": "<Bearer token>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
             },
+            "PrimeQA": {
+                "service_endpoint": "primeqa:50051"
+            },
             "alpha": 0.8
         },
         "readers": {
