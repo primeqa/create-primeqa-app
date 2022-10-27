@@ -168,7 +168,7 @@ To download feedback data, please refer to the FAQs section [here](https://githu
 
 <h4> 3. How to fine tune a reader model? </h4>
 
-1. Download necessary feedback data to fine tune your reader model as per [FAQs #2](https://github.com/primeqa/create-primeqa-app/edit/main/README.md#-2-how-to-retrieve-feedback-data-to-fine-tune-my-reader-model-).
+1. Download necessary feedback data to fine tune your reader model as per [FAQs #2](https://github.com/primeqa/create-primeqa-app#2-how-to-retrieve-feedback-data-to-fine-tune-my-reader-model-).
 
 2. Install [PrimeQA](https://github.com/primeqa/primeqa) library.
 
@@ -176,6 +176,6 @@ To download feedback data, please refer to the FAQs section [here](https://githu
 
 4. Generally, the finetuning would start with the model used when collecting the feedback data. 
 
-5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app/edit/main/README.md#-1-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
+5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app#1-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
 
 
