@@ -151,3 +151,30 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 
 <h2> 🥁 Enjoy </h2>
 You can now open browser of choice (Mozilla Firefox/Google chorme) and visit "http://{PUBLIC_IP}:82" to interact with PrimeQA application.
+
+<h3> 🧪 Drop in your model </h3>
+
+<h3> 🧪 Reader model </h3>
+
+By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
+
+To use your own reader model, place your model under `primeqa-store/model` and point to it from the UI.  From `Application Settings` scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`,  replace `model-dir` with the name of the directory containing the model files.
+
+The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
+
+<h3> 🧪 How to retrieve and finetune with feedback data </h3>
+
+
+To download feedback data, please refer to the FAQ section [here](https://github.com/primeqa/primeqa-orchestrator#1-how-do-i-get-feedbacks-to-fine-tune-my-reader-model-)
+
+<h4> Finetuning the Reader Model </h4>
+
+To finetune a reader model, you will need to install [PrimeQA](https://github.com/primeqa/primeqa)
+
+Instructions for finetuning using feedback data are [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data)
+
+Generally, the finetuning would start with the model used when collecting the feedback data. 
+
+To deploy the finetuned model, follow the instructions in section `Drop_in_your_model` above.
+
+
