@@ -152,29 +152,30 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 <h2> 🥁 Enjoy </h2>
 You can now open browser of choice (Mozilla Firefox/Google chorme) and visit "http://{PUBLIC_IP}:82" to interact with PrimeQA application.
 
-<h3> 🧪 Drop in your model </h3>
+<h2> 🤨 Frequently Asked Questions (FAQs) </h2>
 
-<h3> 🧪 Reader model </h3>
+<h4> 1. How do I use my custom model for reader in `Reading` or `QA` application? </h4>
 
 By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
 
-To use your own reader model, place your model under `primeqa-store/model` and point to it from the UI.  From `Application Settings` scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`,  replace `model-dir` with the name of the directory containing the model files.
+To use your own reader model, place your model in a directory under `primeqa-store/model` and point to it from the UI.  From `Application Settings` scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`,  replace `model-dir` with the name of the directory containing the model files.
 
 The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
 
-<h3> 🧪 How to retrieve and finetune with feedback data </h3>
+<h4> 2. How to retrieve feedback data for finetuning my reader model? </h4>
 
+To download feedback data, please refer to the FAQs section [here](https://github.com/primeqa/primeqa-orchestrator#1-how-do-i-get-feedbacks-to-fine-tune-my-reader-model-).
 
-To download feedback data, please refer to the FAQ section [here](https://github.com/primeqa/primeqa-orchestrator#1-how-do-i-get-feedbacks-to-fine-tune-my-reader-model-)
+<h4> 3. How to fine tune a reader model? </h4>
 
-<h4> Finetuning the Reader Model </h4>
+1. Download necessary feedback data to fine tune your reader model as per [FAQs #2](https://github.com/primeqa/create-primeqa-app/edit/main/README.md#-2-how-to-retrieve-feedback-data-to-fine-tune-my-reader-model-).
 
-To finetune a reader model, you will need to install [PrimeQA](https://github.com/primeqa/primeqa)
+2. Install [PrimeQA](https://github.com/primeqa/primeqa) library.
 
-Instructions for finetuning using feedback data are [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data)
+3. Instructions for finetuning using feedback data are [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data).
 
-Generally, the finetuning would start with the model used when collecting the feedback data. 
+4. Generally, the finetuning would start with the model used when collecting the feedback data. 
 
-To deploy the finetuned model, follow the instructions in section `Drop_in_your_model` above.
+5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app/edit/main/README.md#-1-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
 
 
