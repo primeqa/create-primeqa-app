@@ -47,7 +47,9 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 
 <h3> 🧩 Installation </h3>
 
-1. Set environment variable `PUBLIC_IP` to the ip address of the localhost.
+1. Set environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be running the browser. Otherwise, please use VNC to access the host. 
+
+2. Please ensure the following three ports are free and available: `50051`, `50059` and `82`
 
 2. Run `launch.sh`.  
 
