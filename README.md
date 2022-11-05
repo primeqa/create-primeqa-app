@@ -99,7 +99,7 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
     ```json
 	{
         "retrievers": {
-            "Watson_Discovery": {
+            "Watson Discovery": {
                 "service_endpoint": "<IBM® Watson Discovery CP4D Instance Endpoint>",
                 "service_token": "<Bearer token>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
