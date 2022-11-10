@@ -155,13 +155,13 @@ export PUBLIC_IP=<hostname>
 
 <h2> 🥁 Usage </h2>
 
-You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components.  Some features include adjust settings and for users to provide feedback on retrieved answers. 
+You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components.  Some features include the ability to adjust settings and for users to provide feedback on retrieved answers. 
 
 <h2> 🤨 User Feedback </h2>
 
 Users can provide feedback via the thumbs up / thumbs down icons to the answers shown in the results page. 
 
-To use the feedback, to fine-tune your Reader model
+To use the feedback to fine-tune your Reader model
 
 1. Get the feedback data:
   
@@ -171,9 +171,9 @@ To use the feedback, to fine-tune your Reader model
   -H 'accept: application/json' > feedbacks.json
   ```
 
-3. Follow the instructions on how to finetune a PrimeQA reader with custom data [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data). Generally, the finetuning would start with the model used when collecting the feedback data as specified in the `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+2. Follow the instructions on how to finetune a PrimeQA reader with custom data [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data). Generally, the finetuning would start with the model used when collecting the feedback data as specified in the `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
 
-5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app#3-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
+3. To deploy the finetuned model, follow the instructions in [FAQs #3](https://github.com/primeqa/create-primeqa-app#3-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
 
 
 <h2> 🤨 Frequently Asked Questions (FAQs) </h2>
@@ -200,7 +200,7 @@ docker logs primeqa-services
 
 By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
 
-To use your own reader model, place your model in a directory under `primeqa-store/model` and point to it from the UI.  From `Application Settings` scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`,  replace `model-dir` with the name of the directory containing the model files.
+To use your own reader model, place your model in a directory under `primeqa-store/model`.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
 
 The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
 
