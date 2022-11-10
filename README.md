@@ -71,7 +71,7 @@ export PUBLIC_IP=<hostname>
 
 3. Open your browser of choice (Mozilla Firefox/Google Chorme) and visit "http://`{PUBLIC_IP}`:50059/docs". This url shows the available orchestrator APIs.
 
-4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use. 
+4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use from the examples below. 
 
     a. To use the IBM® Watson Discovery Cloud/CP4D retriever and PrimeQA reader, first configure a Watson Discovery instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery).
 
@@ -95,7 +95,7 @@ export PUBLIC_IP=<hostname>
     }
     ```
     
-    b. To use the PrimeQA retriever and PrimeQA reader, first setup the collection index for the Retriever using the instructions [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services).
+    b. To use the PrimeQA retriever and PrimeQA reader, first setup the collection index for the Retriever using the instructions [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services#-store).
 
     ```json
 	{
