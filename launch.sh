@@ -96,5 +96,7 @@ if ! docker ps -f name=primqa-ui -q > /dev/null 2>&1; then
   exit 1
 fi
 
-echo "Please open a browser (Mozilla Firefox/Google Chrome) and visit http://${PUBLIC_IP}:82"
-echo "===============================***  END   ***==============================="
+echo "Run 'docker ps' command to confirm that the service/orchestrator/ui containers are running"
+echo "IMPORTANT: Please configure the services as specified in the README.md"
+echo "After configuration, please open a browser (Mozilla Firefox/Google Chrome) and visit http://${PUBLIC_IP}:82"
+echo "===============================***  END   ***==============================================================="
