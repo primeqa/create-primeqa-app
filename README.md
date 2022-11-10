@@ -28,9 +28,9 @@ This repository provides easy scripts to run PrimeQA applications via docker.
 
 <h3> ✅ Prerequisites </h3>
 
-We use [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) to run application. Make sure you have most up-to-date version of the those tools. 
+We use [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) to run our application. Make sure you have the most up-to-date version of those tools. 
 
-⚠️ **Important**: Make sure your docker has read/write permissions in existing directory and sub-directories.
+⚠️ **Important**: Make sure your docker has read/write permissions in the existing directory and sub-directories.
 
 
 <h3> 💻 Hardware Requirements </h3>
@@ -43,65 +43,45 @@ GPU: NVIDIA Corporation GV100GL [V100 PCIe 16GB]
 
 NVIDIA Driver version: 470.141.03
 
-Disk space: 50 GB required for the docker, 25 GB available free space in the docker container storage
+Disk space: 50 GB is required for the docker, 25 GB of available free space is needed in the docker container storage
 
 <h3> 🧩 Installation </h3>
 
-1. Set environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be running the browser. Otherwise, please use VNC to access the host. 
+1. Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be running the browser. Otherwise, please use VNC to access the host.
+If running the application locally,  `PUBLIC_IP` can be set to `localhost`.
 
-2. Please ensure the following three ports are free and available: `50051`, `50059` and `82`
+```
+export PUBLIC_IP=<hostname>
+```
 
-2. Run `launch.sh`.  
+2. Please ensure that the following three ports are free and available: `50051`, `50059` and `82`
 
-3. By default, step 2 launches the containers in 'cpu' mode. To launch with gpu support, run launch.sh with `-m gpu` argument as follows `launch.sh -m gpu`. 
+2. Run `launch.sh`  
+
+3. By default, step 2 launches the containers in 'cpu' mode. To launch with gpu support, run launch.sh with `-m gpu` argument as follows `launch.sh -m gpu`
 
 🚨 **Note**: This process will take a while to complete as it will download necessary docker images and bring up services.
 
 
 <h3>⚙️ Configuration </h3>
 
-1. Run `docker ps` to verify all three containers (primeqa-ui, primqa-orchestrator and primeqa-service) are running.
+1. Run `docker ps` to verify that all the three containers (primeqa-ui, primqa-orchestrator and primeqa-service) are running.
 
-2. You will need to configure few additional settings before first use. These setting are intentionally left blank for security purposes, 
+2. You will need to configure a few additional settings before first use. These setting are intentionally left blank for security purposes. 
 
-3. Open browser of choice (Mozilla Firefox/Google chorme) and visit "http://`{PUBLIC_IP}`:50059/docs". This url shows available orchestrator APIs.
+3. Open your browser of choice (Mozilla Firefox/Google Chorme) and visit "http://`{PUBLIC_IP}`:50059/docs". This url shows the available orchestrator APIs.
 
-4. Click on [PATCH] `/settings`. Once expanded, click on `Try it out` button and copy-paste following content in the request body section.
-    
-    a. For IBM® Watson Discovery based retriever, update `Watson Discovery` releated section in `retrievers`
-    ```json
-        "Watson Discovery": {
-            "service_endpoint": "<IBM® Watson Discovery Cloud/CP4D Instance Endpoint>",
-            "service_token": "<Bearer token (If using IBM® Watson Discovery CP4D Instance)>",
-            "service_api_key": "<API key (If using IBM® Watson Discovery Cloud instance)>",
-            "service_project_id": "<IBM® Watson Discovery Project ID>"
-        }
-    ```
+4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use. 
 
-    b. For PrimeQA based retrievers, update `PrimeQA` related section in `retrievers` as follows
-    ```json
-        "PrimeQA": {
-            "service_endpoint": "primeqa:50051"
-        }
-    ```
-
-    c. For PrimeQA based readers, update `PrimeQA` related section in `readers` as follows
-    ```json
-        "PrimeQA": {
-            "service_endpoint": "primeqa:50051",
-            "beta": 0.7
-        }
-    ```
-
-
-    For example,  when IBM® Watson Discovery CP4D instance based retriever and PrimeQA based reader is used, the settings will look as follows
+    a. To use the IBM® Watson Discovery Cloud/CP4D retriever and PrimeQA reader, first configure a Watson Discovery instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery).
 
     ```json
 	{
         "retrievers": {
             "Watson Discovery": {
-                "service_endpoint": "<IBM® Watson Discovery CP4D Instance Endpoint>",
-                "service_token": "<Bearer token>",
+                "service_endpoint": "<IBM® Watson Discovery Cloud/CP4D Instance Endpoint>",
+                "service_token": "<Bearer token (If using IBM® Watson Discovery CP4D Instance)>",
+                "service_api_key": "<API key (If using IBM® Watson Discovery Cloud instance)>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
             },
             "alpha": 0.8
@@ -114,14 +94,34 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
         }
     }
     ```
+    
+    b. To use the PrimeQA retriever and PrimeQA reader, first setup the collection index for the Retriever using the instructions [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services).
 
-5. Click `Execute` button. You will see status code: 200 and updated setting once you scroll down.
+    ```json
+	{
+        "retrievers": {
+            "PrimeQA": {
+                "service_endpoint": "primeqa:50051",
+                "beta": 0.7
+            }
+            "alpha": 0.8
+        },
+        "readers": {
+            "PrimeQA": {
+                "service_endpoint": "primeqa:50051",
+                "beta": 0.7
+            }
+        }
+    }
+    ```
 
-6 Please allow 30 seconds for the primeqa-orchestrator to establish connectivity to Watson Discovery and PrimeQA service.
+5. Click the `Execute` button. You will see status code: 200 indicating success and updated settings when you scroll down.
+
+6. Please allow 30 seconds for the primeqa-orchestrator to establish connectivity to Watson Discovery and PrimeQA service.
 
 <h3> 🧪 Testing </h3>
 
-1. You can test out primeqa orchestrator's connectivity to your IBM® Watson Discovery (WD) instance by executing [GET] `/retrievers/{retriever_id}/collections` endpoint as follows
+1. You can test the PrimeQA orchestrator's connectivity to your IBM® Watson Discovery (WD) instance by executing the [GET] `/retrievers/{retriever_id}/collections` endpoint.
 
 ```sh
 	curl -X 'GET' 'http://{PUBLIC_IP}:50059/retrievers/WatsonDiscovery/collections' -H 'accept: application/json'
@@ -133,7 +133,7 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 	curl -X 'GET' 'http://{PUBLIC_IP}:50059/retrievers' -H 'accept: application/json'
 ```
 
-3. To run a sample question answering query, execture [POST] `/ask` endpoint
+3. To run a sample question answering query, execute [POST] `/ask` endpoint
 
 ```sh
 	curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
@@ -153,12 +153,50 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 }'
 ```
 
-<h2> 🥁 Enjoy </h2>
-You can now open browser of choice (Mozilla Firefox/Google chorme) and visit "http://{PUBLIC_IP}:82" to interact with PrimeQA application.
+<h2> 🥁 Usage </h2>
+
+You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components.  Some features include adjust settings and for users to provide feedback on retrieved answers. 
+
+<h2> 🤨 User Feedback </h2>
+
+Users can provide feedback via the thumbs up / thumbs down icons to the answers shown in the results page. 
+
+To use the feedback, to fine-tune your Reader model
+
+1. Get the feedback data:
+  
+  ```sh
+    curl -X 'GET' \
+  'http://localhost:50059/feedbacks?application=reading&application=qa&_format=primeqa' \
+  -H 'accept: application/json' > feedbacks.json
+  ```
+
+3. Follow the instructions on how to finetune a PrimeQA reader with custom data [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data). Generally, the finetuning would start with the model used when collecting the feedback data as specified in the `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+
+5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app#3-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
+
 
 <h2> 🤨 Frequently Asked Questions (FAQs) </h2>
 
-<h4> 1. How do I use my custom model for reader in `Reading` or `QA` application? </h4>
+<h4> 1. Troubleshooting </h4>
+
+a. If the UI is not loading properly or a field is blank, please try these quick steps:
+   - clear the browser cache and retry
+   - restart the containers by running `terminate.sh` and then `launch.sh`
+
+b. To view the logs, use the docker logs command, for example:
+
+```
+docker logs primeqa-ui
+docker logs primeqa-orchestrator
+docker logs primeqa-services
+```
+
+<h4> 2. How do I switch to a different PrimeQA Reader model from the Huggingface model hub ? </h4>
+
+ Paste the model name from the [Huggingface model hub](https://huggingface.co/PrimeQA) into the  `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+
+<h4> 3. How do I use my custom model for reader in `Reading` or `QA` application? </h4>
 
 By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
 
@@ -166,27 +204,11 @@ To use your own reader model, place your model in a directory under `primeqa-sto
 
 The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
 
-<h4> 2. How to retrieve feedback data for finetuning my reader model? </h4>
-
-To download feedback data, please refer to the FAQs section [here](https://github.com/primeqa/primeqa-orchestrator#1-how-do-i-get-feedbacks-to-fine-tune-my-reader-model-).
-
-<h4> 3. How to fine tune a reader model? </h4>
-
-1. Download necessary feedback data to fine tune your reader model as per [FAQs #2](https://github.com/primeqa/create-primeqa-app#2-how-to-retrieve-feedback-data-to-fine-tune-my-reader-model-).
-
-2. Install [PrimeQA](https://github.com/primeqa/primeqa) library.
-
-3. Instructions for finetuning using feedback data are [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data).
-
-4. Generally, the finetuning would start with the model used when collecting the feedback data. 
-
-5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app#1-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
-
 <h4> How do I use my ColBERT index and checkpoint ? </h4>
 
 Please follow the instructions in the [Store section](https://github.com/primeqa/primeqa/tree/main/primeqa/services) 
 
 <h4> The Corpus field is blank in the 'Retriever' or 'Question Answering' page </h4>
 
-Please try reloading the page.  If that does not fix it, connectivity to the Retriever service may have been broken.  You may need to restart the containers. Run the 'terminate.sh' script to stop all the containers and relaunch using the 'launch.sh' script.
+See `./Troubleshooting`
 
