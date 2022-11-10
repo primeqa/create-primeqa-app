@@ -186,7 +186,7 @@ To download feedback data, please refer to the FAQs section [here](https://githu
 
 Please follow the instructions in the [Store section](https://github.com/primeqa/primeqa/tree/main/primeqa/services) 
 
-<h4> The Corpus field is blank in the 'Retriever' or 'Question Answering' page <h4>
+<h4> The Corpus field is blank in the 'Retriever' or 'Question Answering' page </h4>
 
 Please try reloading the page.  If that does not fix it, connectivity to the Retriever service may have been broken.  You may need to restart the containers. Run the 'terminate.sh' script to stop all the containers and relaunch using the 'launch.sh' script.
 
