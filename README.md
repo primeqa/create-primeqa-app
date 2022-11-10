@@ -117,6 +117,8 @@ Disk space: 50 GB required for the docker, 25 GB available free space in the doc
 
 5. Click `Execute` button. You will see status code: 200 and updated setting once you scroll down.
 
+6 Please allow 30 seconds for the primeqa-orchestrator to establish connectivity to Watson Discovery and PrimeQA service.
+
 <h3> 🧪 Testing </h3>
 
 1. You can test out primeqa orchestrator's connectivity to your IBM® Watson Discovery (WD) instance by executing [GET] `/retrievers/{retriever_id}/collections` endpoint as follows
@@ -180,4 +182,11 @@ To download feedback data, please refer to the FAQs section [here](https://githu
 
 5. To deploy the finetuned model, follow the instructions in [FAQs #1](https://github.com/primeqa/create-primeqa-app#1-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
 
+<h4> How do I use my ColBERT index and checkpoint ? </h4>
+
+Please follow the instructions in the [Store section](https://github.com/primeqa/primeqa/tree/main/primeqa/services) 
+
+<h4> The Corpus field is blank in the 'Retriever' or 'Question Answering' page <h4>
+
+Please try reloading the page.  If that does not fix it, connectivity to the Retriever service may have been broken.  You may need to restart the containers. Run the 'terminate.sh' script to stop all the containers and relaunch using the 'launch.sh' script.
 
