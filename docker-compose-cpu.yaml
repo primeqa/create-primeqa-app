@@ -27,7 +27,7 @@ services:
     container_name: primeqa-services
     ports:
       - 50051:50051
-    runtime: nvidia
+    #runtime: nvidia
     environment:
       - STORE_DIR=/store
       - num_grpc_server_workers=1
