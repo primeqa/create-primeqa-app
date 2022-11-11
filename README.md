@@ -73,14 +73,14 @@ export PUBLIC_IP=<hostname>
 
 4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use from the examples below. 
 
-    a. To use the IBM® Watson Discovery retriever and PrimeQA reader, first configure a Watson Discovery Cloud instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery) and create a collection index.
+    a. To use the IBM® Watson Discovery retriever and PrimeQA reader, first configure a IBM® Watson Discovery Cloud instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery) and create a collection index.
 
     ```json
 	{
         "retrievers": {
             "Watson Discovery": {
                 "service_endpoint": "<IBM® Watson Discovery Cloud/CP4D Instance Endpoint>",
-                "service_token": "<Bearer token (If using IBM® Watson Discovery CP4D Instance)>",
+                "service_token": "<Bearer token (ONLY If using IBM® Watson Discovery CP4D Instance)>",
                 "service_api_key": "<API key (If using IBM® Watson Discovery Cloud instance)>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
             },
@@ -112,9 +112,11 @@ export PUBLIC_IP=<hostname>
     }
     ```
 
+    NOTE: The final scoring and ranking is done with a weighted sum of the Reader answer scores and Retriever search hits scores. The `beta` field is the weight assigned to the reader scores and `1-beta` is the weight assigned to the retriever scores.
+
 5. Click the `Execute` button. You will see status code: 200 indicating success and updated settings when you scroll down.
 
-6. Please allow 30 seconds for the primeqa-orchestrator to establish connectivity to Watson Discovery and PrimeQA service.
+6. Please allow 30 seconds for the primeqa-orchestrator to establish connectivity to IBM® Watson Discovery and PrimeQA service.
 
 <h3> 🧪 Testing </h3>
 
@@ -133,7 +135,7 @@ export PUBLIC_IP=<hostname>
 
 3. To run a sample question answering query, execute [POST] `/ask` endpoint
 
-    a. Using the Watson Discovery Retriever
+    a. Using the IBM® Watson Discovery Retriever
 
 
         ```sh
