@@ -157,9 +157,10 @@ export PUBLIC_IP=<hostname>
 
 You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components.  Some features include the ability to adjust settings and for users to provide feedback on retrieved answers. 
 
+
 <h2> 🤨 User Feedback </h2>
 
-Users can provide feedback via the thumbs up / thumbs down icons to the answers shown in the results page. 
+Users can provide feedback via the 👍 and 👎 icons to the answers shown in the results page. 
 
 To use the feedback to fine-tune your Reader model
 
@@ -173,12 +174,11 @@ To use the feedback to fine-tune your Reader model
 
 2. Follow the instructions on how to finetune a PrimeQA reader with custom data [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data). Generally, the finetuning would start with the model used when collecting the feedback data as specified in the `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
 
-3. To deploy the finetuned model, follow the instructions in [FAQs #3](https://github.com/primeqa/create-primeqa-app#3-how-do-i-use-my-custom-model-for-reader-in-reading-or-qa-application-).
+3. To deploy the finetuned model, follow the instructions in [here](#custom-mrc).
 
 
-<h2> 🤨 Frequently Asked Questions (FAQs) </h2>
 
-<h4> 1. Troubleshooting </h4>
+<h2 id="troubleshooting"> 🧪 Troubleshooting</h2>
 
 a. If the UI is not loading properly or a field is blank, please try these quick steps:
    - clear the browser cache and retry
@@ -186,29 +186,31 @@ a. If the UI is not loading properly or a field is blank, please try these quick
 
 b. To view the logs, use the docker logs command, for example:
 
-```
-docker logs primeqa-ui
-docker logs primeqa-orchestrator
-docker logs primeqa-services
-```
+    ```
+    docker logs primeqa-ui
+    docker logs primeqa-orchestrator
+    docker logs primeqa-services
+    ```
 
-<h4> 2. How do I switch to a different PrimeQA Reader model from the Huggingface model hub ? </h4>
+<h2> 🤨 Frequently Asked Questions (FAQs) </h2>
 
- Paste the model name from the [Huggingface model hub](https://huggingface.co/PrimeQA) into the  `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+1. How do I switch to a different PrimeQA Reader model from the Huggingface model hub ?
 
-<h4> 3. How do I use my custom model for reader in `Reading` or `QA` application? </h4>
+    Paste the model name from the [Huggingface model hub](https://huggingface.co/PrimeQA) into the  `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+ 
+2. <a id="custom-mrc"></a>How do I use my custom model for reader in `Reading` or `QA` application?
 
-By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
+    By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
 
-To use your own reader model, place your model in a directory under `primeqa-store/model`.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
+    To use your own reader model, place your model in a directory under `primeqa-store/model` directory.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
 
-The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
+    The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
 
-<h4> How do I use my ColBERT index and checkpoint ? </h4>
+3. How do I use my ColBERT index and checkpoint ? 
 
-Please follow the instructions in the [Store section](https://github.com/primeqa/primeqa/tree/main/primeqa/services) 
+    Please follow the instructions in [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services#-store) 
 
-<h4> The Corpus field is blank in the 'Retriever' or 'Question Answering' page </h4>
+4. The Corpus field is blank in the 'Retriever' or 'Question Answering' page 
 
-See `./Troubleshooting`
+    See [Troubleshooting](#troubleshooting)
 
