@@ -158,7 +158,7 @@ export PUBLIC_IP=<hostname>
 You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components.  Some features include the ability to adjust settings and for users to provide feedback on retrieved answers. 
 
 
-<h2> 🤨 User Feedback </h2>
+<h2> 💻 User Feedback </h2>
 
 Users can provide feedback via the 👍 and 👎 icons to the answers shown in the results page. 
 
@@ -178,7 +178,7 @@ To use the feedback to fine-tune your Reader model
 
 
 
-<h2 id="troubleshooting"> 🧪 Troubleshooting</h2>
+<h2 id="troubleshooting"> 🤨 Troubleshooting</h2>
 
 a. If the UI is not loading properly or a field is blank, please try these quick steps:
    - clear the browser cache and retry
