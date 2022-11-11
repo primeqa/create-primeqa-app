@@ -47,8 +47,8 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
 
 <h3> 🧩 Installation </h3>
 
-1. Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be running the browser. Otherwise, please use VNC to access the host.
-If running the application locally,  `PUBLIC_IP` can be set to `localhost`.
+1. Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be accessing via the browser. Otherwise, please use VNC to access the host.
+If accessig the application via the browser locally,  `PUBLIC_IP` can be set to `localhost`.
 
 ```
 export PUBLIC_IP=<hostname>
@@ -73,7 +73,7 @@ export PUBLIC_IP=<hostname>
 
 4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use from the examples below. 
 
-    a. To use the IBM® Watson Discovery Cloud/CP4D retriever and PrimeQA reader, first configure a Watson Discovery instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery).
+    a. To use the IBM® Watson Discovery retriever and PrimeQA reader, first configure a Watson Discovery Cloud instance using the instructions [here](https://cloud.ibm.com/catalog/services/watson-discovery) and create a collection index.
 
     ```json
 	{
@@ -84,7 +84,6 @@ export PUBLIC_IP=<hostname>
                 "service_api_key": "<API key (If using IBM® Watson Discovery Cloud instance)>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
             },
-            "alpha": 0.8
         },
         "readers": {
             "PrimeQA": {
@@ -102,9 +101,7 @@ export PUBLIC_IP=<hostname>
         "retrievers": {
             "PrimeQA": {
                 "service_endpoint": "primeqa:50051",
-                "beta": 0.7
             }
-            "alpha": 0.8
         },
         "readers": {
             "PrimeQA": {
@@ -130,28 +127,95 @@ export PUBLIC_IP=<hostname>
 2. To see all available retrievers, execute [GET] `/retrievers` endpoint
 
 ```sh
+
 	curl -X 'GET' 'http://{PUBLIC_IP}:50059/retrievers' -H 'accept: application/json'
 ```
 
 3. To run a sample question answering query, execute [POST] `/ask` endpoint
 
-```sh
-	curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "question": "<SAMPLE QUERY>",
-  "retriever": {
-    "retriever_id": "WatsonDiscovery"
-  },
-  "collection": {
-    "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
-    "name": "Name of corresponding collection"
-  },
-  "reader": {
-    "reader_id": "ExtractiveReader"
-  }
-}'
-```
+    a. Using the Watson Discovery Retriever
+
+
+        ```sh
+
+            curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
+            -H 'Content-Type: application/json' \
+            -d '{
+            "question": "<SAMPLE QUERY>",
+            "retriever": {
+                "retriever_id": "WatsonDiscovery" 
+            },
+            "collection": {
+                "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
+                "name": "Name of corresponding collection"
+            },
+            "reader": {
+                "reader_id": "ExtractiveReader"
+            }
+            }'
+        ```
+
+    b. Using the PrimeQA Retriever
+
+
+        ```sh
+
+            curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
+            -H 'Content-Type: application/json' \
+            -d '{
+            "question": "<SAMPLE QUERY>",
+            "retriever": {
+                "retriever_id": "ColBERTRetriever"
+            },
+            "collection": {
+                "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
+                "name": "Name of corresponding collection"
+            },
+            "reader": {
+                "reader_id": "ExtractiveReader"
+            }
+            }'
+        ```
+
+4. To run reading:
+
+    ```sh
+
+        curl -X 'POST' \
+        'http://{PUBLIC_IP}:50059/GetAnswersRequest' \
+        -H 'accept: application/json' \
+        -H 'Content-Type: application/json' \
+        -d '{
+        "question": "Where was Genghis Khan buried?",
+        "contexts": [
+            "Before Genghis Khan died, he assigned Ögedei Khan as his successor and split his empire into khanates among his sons and grandsons. He died in 1227 after defeating the Western Xia. He was buried in an unmarked grave somewhere in Mongolia at an unknown location.  His descendants extended the Mongol Empire across most of Eurasia by conquering or creating vassal states out of all of modern-day China, Korea, the Caucasus, Central Asia, and substantial portions of modern Eastern Europe, Russia, and Southwest Asia. Many of these invasions repeated the earlier large-scale slaughters of local populations. As a result, Genghis Khan and his empire have a fearsome reputation in local histories.."
+        ],
+        "reader": {
+            "reader_id": "ExtractiveReader",
+            "parameters": [
+            {
+                "parameter_id": "max_num_answers",
+                "value": 5
+            }
+            ]
+        }
+        }'
+    ```
+
+    Example Answer:
+
+    ```
+        [
+            {
+                "text": "Mongolia at an unknown location",
+                "confidence_score": 1,
+                "start_char_offset": 229,
+                "end_char_offset": 260,
+                "context_index": 0
+            }
+        ]
+    ```
+
 
 <h2> 🥁 Usage </h2>
 
@@ -174,7 +238,7 @@ To use the feedback to fine-tune your Reader model
 
 2. Follow the instructions on how to finetune a PrimeQA reader with custom data [here](https://github.com/primeqa/primeqa/tree/main/examples/custom_mrc#finetuning-using-feedback-data). Generally, the finetuning would start with the model used when collecting the feedback data as specified in the `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
 
-3. To deploy the finetuned model, follow the instructions in [here](#custom-mrc).
+3. To deploy the finetuned model, follow the instructions [here](#custom-mrc).
 
 
 
@@ -208,7 +272,7 @@ b. To view the logs, use the docker logs command, for example:
 
 3. How do I use my ColBERT index and checkpoint ? 
 
-    Please follow the instructions in [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services#-store) 
+    Please follow the instructions [here](https://github.com/primeqa/primeqa/tree/main/primeqa/services#-store) 
 
 4. The Corpus field is blank in the 'Retriever' or 'Question Answering' page 
 
