@@ -263,6 +263,8 @@ b. To view the logs, use the docker logs command, for example:
 1. How do I switch to a different PrimeQA Reader model from the Huggingface model hub ?
 
     Paste the model name from the [Huggingface model hub](https://huggingface.co/PrimeQA) into the  `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
+
+    IMPORTANT:  Only models trained using PrimeQA are supported.  Other models based on Huggingface QA model will not work.
  
 2. <a id="custom-reader"></a>How do I use my custom model for reader in `Reading` or `QA` application?
 
