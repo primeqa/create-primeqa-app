@@ -266,7 +266,7 @@ b. To view the logs, use the docker logs command, for example:
  
 2. <a id="custom-mrc"></a>How do I use my custom model for reader in `Reading` or `QA` application?
 
-    By default the reader initializes the `PrimeQA/tydiqa-primary-task-xlm-roberta-large` from the Huggingface model hub. 
+    By default the reader initializes the `PrimeQA/nq_tydi_sq1-reader-xlmr_large-20221110` from the Huggingface model hub. 
 
     To use your own reader model, place your model in a directory under `primeqa-store/model` directory.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
 
