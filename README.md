@@ -81,7 +81,7 @@ export PUBLIC_IP=<hostname>
             "Watson Discovery": {
                 "service_endpoint": "<IBM® Watson Discovery Cloud/CP4D Instance Endpoint>",
                 "service_token": "<Bearer token (ONLY If using IBM® Watson Discovery CP4D Instance)>",
-                "service_api_key": "<API key (If using IBM® Watson Discovery Cloud instance)>",
+                "service_api_key": "<API key (ONLY If using IBM® Watson Discovery Cloud instance)>",
                 "service_project_id": "<IBM® Watson Discovery Project ID>"
             },
         },
@@ -264,7 +264,7 @@ b. To view the logs, use the docker logs command, for example:
 
     Paste the model name from the [Huggingface model hub](https://huggingface.co/PrimeQA) into the  `Model` field under `Reader` settings in the `Reading` and/or `QuestionAnswering` UI.
  
-2. <a id="custom-mrc"></a>How do I use my custom model for reader in `Reading` or `QA` application?
+2. <a id="custom-reader"></a>How do I use my custom model for reader in `Reading` or `QA` application?
 
     By default the reader initializes the `PrimeQA/nq_tydi_sq1-reader-xlmr_large-20221110` from the Huggingface model hub. 
 
