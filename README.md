@@ -270,7 +270,7 @@ b. To view the logs, use the docker logs command, for example:
 
     By default the reader initializes the `PrimeQA/nq_tydi_sq1-reader-xlmr_large-20221110` from the Huggingface model hub. 
 
-    To use your own reader model, place your model in a directory under `primeqa-store/model` directory.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
+    To use your own reader model, place your model in a directory under `primeqa-store/models` directory.  To point to your model from the UI, navigate to  `Application Settings`, scroll down to `Reader Settings` and to `Model` and set it to `/store/model/<model-dir>`, replace `model-dir` with the name of the directory containing the model files.
 
     The service will load the model and initialize a new reader.  This may take a few minutes. Subsequent queries will use this model.
 
