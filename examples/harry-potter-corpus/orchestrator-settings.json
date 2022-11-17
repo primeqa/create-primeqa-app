@@ -1,0 +1,14 @@
+{
+  "retrievers": {
+    "PrimeQA": {
+      "service_endpoint": "primeqa:50051"
+    },
+    "alpha": 0.8
+  },
+  "readers": {
+    "PrimeQA": {
+      "service_endpoint": "primeqa:50051",
+      "beta": 0.7
+    }
+  }
+}
