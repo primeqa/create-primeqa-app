@@ -20,6 +20,7 @@ fi
 
 readonly UUID="$(cat /proc/sys/kernel/random/uuid)"
 readonly CHECKPOINT="$(realpath ${1})"
+readonly CHECKPOINT_NAME="$(basename ${CHECKPOINT})"
 readonly COLLECTION="$(realpath ${2})"
 readonly STORE="$(realpath ${3})"
 readonly STORE_NAME="$(basename ${STORE})"
@@ -59,6 +60,7 @@ mv "${INDEX_DIR}"/*.pt "${INDEX_DIR}"/*.json "${INDEX_DIR}"/index/
 cat << EOF > ${INDEX_DIR}/information.json
 {
   "index_id": "${UUID}",
+  "checkpoint": "${CHECKPOINT_NAME}",
   "status": "READY"
 }
 EOF
