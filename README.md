@@ -50,15 +50,25 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
 1. Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be accessing via the browser. Otherwise, please use VNC to access the host.
 If accessig the application via the browser locally,  `PUBLIC_IP` can be set to `localhost`.
 
-```
-export PUBLIC_IP=<hostname>
-```
+    ```
+    export PUBLIC_IP=<hostname>
+    ```
 
 2. Please ensure that the following three ports are free and available: `50051`, `50059` and `82`
 
-2. Run `launch.sh`  
+3. Launch the container using `bash` in `cpu` (default) or `gpu` mode: 
 
-3. By default, step 2 launches the containers in 'cpu' mode. To launch with gpu support, run launch.sh with `-m gpu` argument as follows `launch.sh -m gpu`
+    CPU mode (default):
+
+    ```
+    launch.sh
+    ``` 
+
+    GPU mode:
+
+    ```
+    launch.sh -m gpu
+    ```
 
 🚨 **Note**: This process will take a while to complete as it will download necessary docker images and bring up services.
 
@@ -69,7 +79,7 @@ export PUBLIC_IP=<hostname>
 
 2. You will need to configure a few additional settings before first use. These setting are intentionally left blank for security purposes. 
 
-3. Open your browser of choice (Mozilla Firefox/Google Chorme) and visit "http://`{PUBLIC_IP}`:50059/docs". This url shows the available orchestrator APIs.
+3. Open your browser of choice (Mozilla Firefox/Google Chrome) and visit "http://`{PUBLIC_IP}`:50059/docs". This url shows the available orchestrator APIs.
 
 4. Click on [PATCH] `/settings`. Once expanded, click on the `Try it out` button and copy-paste the Retriever and Reader settings that you would like to use from the examples below. 
 
@@ -122,100 +132,92 @@ export PUBLIC_IP=<hostname>
 
 1. You can test the PrimeQA orchestrator's connectivity to your IBM® Watson Discovery (WD) instance by executing the [GET] `/retrievers/{retriever_id}/collections` endpoint.
 
-```sh
-	curl -X 'GET' 'http://{PUBLIC_IP}:50059/retrievers/WatsonDiscovery/collections' -H 'accept: application/json'
-```
+    ```sh
+    curl -X 'GET' "http://{$PUBLIC_IP}:50059/retrievers/WatsonDiscovery/collections" -H 'accept: application/json'
+    ```
 
 2. To see all available retrievers, execute [GET] `/retrievers` endpoint
 
-```sh
-
-	curl -X 'GET' 'http://{PUBLIC_IP}:50059/retrievers' -H 'accept: application/json'
-```
+    ```sh
+    curl -X 'GET' "http://{$PUBLIC_IP}:50059/retrievers" -H 'accept: application/json'
+    ```
 
 3. To run a sample question answering query, execute [POST] `/ask` endpoint
 
-    a. Using the IBM® Watson Discovery Retriever
+    a. Using the IBM® Watson Discovery Retriever (You must provide the name of your <collection_id>)
+    ```sh
+    curl -X 'POST' "http://{$PUBLIC_IP}:50059/ask" -H 'accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "question": "<SAMPLE QUERY>",
+    "retriever": {
+        "retriever_id": "WatsonDiscovery" 
+    },
+    "collection": {
+        "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
+        "name": "Name of corresponding collection"
+    },
+    "reader": {
+        "reader_id": "ExtractiveReader"
+    }
+    }'
+    ```
+    b. Using the PrimeQA Retriever (You must provide the name of your <collection_id>)
 
-
-        ```sh
-
-            curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
-            -H 'Content-Type: application/json' \
-            -d '{
-            "question": "<SAMPLE QUERY>",
-            "retriever": {
-                "retriever_id": "WatsonDiscovery" 
-            },
-            "collection": {
-                "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
-                "name": "Name of corresponding collection"
-            },
-            "reader": {
-                "reader_id": "ExtractiveReader"
-            }
-            }'
-        ```
-
-    b. Using the PrimeQA Retriever
-
-
-        ```sh
-
-            curl -X 'POST' 'http://{PUBLIC_IP}:50059/ask' -H 'accept: application/json' \
-            -H 'Content-Type: application/json' \
-            -d '{
-            "question": "<SAMPLE QUERY>",
-            "retriever": {
-                "retriever_id": "ColBERTRetriever"
-            },
-            "collection": {
-                "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
-                "name": "Name of corresponding collection"
-            },
-            "reader": {
-                "reader_id": "ExtractiveReader"
-            }
-            }'
-        ```
+    ```sh
+    curl -X 'POST' "http://{$PUBLIC_IP}:50059/ask" -H 'accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "question": "<SAMPLE QUERY>",
+    "retriever": {
+        "retriever_id": "ColBERTRetriever"
+    },
+    "collection": {
+        "collection_id": "<collection_id> from collections returned by [GET]/collections API.",
+        "name": "Name of corresponding collection"
+    },
+    "reader": {
+        "reader_id": "ExtractiveReader"
+    }
+    }'
+    ```
 
 4. To run reading:
 
     ```sh
-
-        curl -X 'POST' \
-        'http://{PUBLIC_IP}:50059/GetAnswersRequest' \
-        -H 'accept: application/json' \
-        -H 'Content-Type: application/json' \
-        -d '{
-        "question": "Where was Genghis Khan buried?",
-        "contexts": [
-            "Before Genghis Khan died, he assigned Ögedei Khan as his successor and split his empire into khanates among his sons and grandsons. He died in 1227 after defeating the Western Xia. He was buried in an unmarked grave somewhere in Mongolia at an unknown location.  His descendants extended the Mongol Empire across most of Eurasia by conquering or creating vassal states out of all of modern-day China, Korea, the Caucasus, Central Asia, and substantial portions of modern Eastern Europe, Russia, and Southwest Asia. Many of these invasions repeated the earlier large-scale slaughters of local populations. As a result, Genghis Khan and his empire have a fearsome reputation in local histories.."
-        ],
-        "reader": {
-            "reader_id": "ExtractiveReader",
-            "parameters": [
-            {
-                "parameter_id": "max_num_answers",
-                "value": 5
-            }
-            ]
+    curl -X 'POST' \
+    "http://{$PUBLIC_IP}:50059/GetAnswersRequest" \
+    -H 'accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "question": "Where was Genghis Khan buried?",
+    "contexts": [
+        "Before Genghis Khan died, he assigned Ögedei Khan as his successor and split his empire into khanates among his sons and grandsons. He died in 1227 after defeating the Western Xia. He was buried in an unmarked grave somewhere in Mongolia at an unknown location.  His descendants extended the Mongol Empire across most of Eurasia by conquering or creating vassal states out of all of modern-day China, Korea, the Caucasus, Central Asia, and substantial portions of modern Eastern Europe, Russia, and Southwest Asia. Many of these invasions repeated the earlier large-scale slaughters of local populations. As a result, Genghis Khan and his empire have a fearsome reputation in local histories.."
+    ],
+    "reader": {
+        "reader_id": "ExtractiveReader",
+        "parameters": [
+        {
+            "parameter_id": "max_num_answers",
+            "value": 5
         }
-        }'
+        ]
+    }
+    }'
     ```
 
     Example Answer:
 
-    ```
-        [
-            {
-                "text": "Mongolia at an unknown location",
-                "confidence_score": 1,
-                "start_char_offset": 229,
-                "end_char_offset": 260,
-                "context_index": 0
-            }
-        ]
+    ```sh
+    [
+        {
+            "text": "Mongolia at an unknown location",
+            "confidence_score": 1,
+            "start_char_offset": 229,
+            "end_char_offset": 260,
+            "context_index": 0
+        }
+    ]
     ```
 
 
