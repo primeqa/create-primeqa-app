@@ -146,7 +146,7 @@ We need to get the corpus into the right shape for the indexing process. PrimeQA
 We want this collection of documents to retain as much continuity of meaning as possible, so it's a good idea to keep paragraphs and avoid separations within sentences. Short pieces (like dialogue lines) can be combined into larger ones, and larger paragraphs can be split by sentence boundaries to keep the word count in check. This corpus has plenty of dialogue lines, and a few paragraphs longer than 180 words. Both of these transformations are done in our preprocessing scripts, alongside the fixing of page-spanning paragraphs. 
 
 ```
-(hp-corpus) harry-potter-corpus $ ./process.sh 
+(hp-corpus) harry-potter-corpus $ ./process.py Book*.txt > corpus.tsv
 Processing Book1.txt... 
 Processing Book2.txt... 
 Processing Book3.txt... 
@@ -154,7 +154,6 @@ Processing Book4.txt...
 Processing Book5.txt... 
 Processing Book6.txt... 
 Processing Book7.txt... 
-corpus.tsv successfully generated. 
 (hp-corpus) harry-potter-corpus $ 
 ```
 
@@ -195,53 +194,21 @@ lowed himself a grin. “Most mysterious. And now, over to Jim McGuffin with t>
 : 
 ```
 
-The inner workings of the `process.sh` script are described below. 
+The inner workings of the `process.py` script are described below. 
 
 ## Processing steps
 
-`process.sh` is a Bash script that streams the books' contents into a series of pipelined modification steps:
+`process.py` is a Python script that streams the books' contents into a series of pipelined modification steps:
 
-- Using `sed` regular expression replacements, turn page footer occurrences into empty lines (first three steps). 
-- With the fourth `sed` command, turn lines containing only spaces into empty lines. 
-- `remove_multi_newline.py` collapses three or more contiguous newlines into a single empty line. 
-- `remove_single_newline.py` removes single newlines so paragraphs get consolidated into the same line, one per line. 
-- `fix_straddling_paragraphs.py` fixes page break-straddling paragraphs checking sentence continuity (one paragraph per line up to this point). 
-- `combine_up_to_n_words.py` combines contiguous short paragraphs as long as the result doesn't exceed 180 words. 
-- `split_by_sentences_up_to_n_words.py` splits paragraphs longer than 180 words, keeping whole sentences. 
-- `to_tsv.py` formats each piece as `tsv` appending `Book<N> Paragraph <M>` as title. 
+- Using regular expression matching, skips page footer occurrences (first three steps) and blank lines (fourth step).
+- `fix_straddling_paragraphs` fixes page break-straddling paragraphs checking sentence continuity (one paragraph per line up to this point). 
+- `combine_up_to_n_words` combines contiguous short paragraphs as long as the result doesn't exceed 180 words. 
+- `split_by_sentences_up_to_n_words` splits paragraphs longer than 180 words, keeping whole sentences. 
+- `to_tsv` formats each piece as `tsv` appending `Book<N> Paragraph <M>` as title. 
 
-The first steps are implemented with simple Bash commands, while the later steps, such as the sentence-aware ones, are implemented as Python scripts with spaCy. 
+Each book gets serialized into an intermediate `tsv` representation of one "document" per line, being each one of these either an original paragraph, whole sentences of a long paragraph or a concatenation of short paragraphs or dialogue lines. 
 
-```
-readonly WORD_QTY="${1:-180}" 
- 
-for book in Book*.txt; do 
-  >&2 echo "Processing ${book}..." 
-  cat "${book}" \ 
-    | sed -E 's/^Page \|\s*[0-9]+ .*$//g' \ 
-    | sed -E 's/^P a g e.*$//g' \ 
-    | sed -E 's/P.*Rowling//g' \ 
-    | sed -E 's/^\s+$//g' \ 
-    | ./remove_multi_newline.py \ 
-    | ./remove_single_newline.py \ 
-    | ./fix_straddling_paragraphs.py \ 
-    | ./combine_up_to_n_words.py "${WORD_QTY}" \ 
-    | ./to_tsv.py "${book%.*}" \ 
-    | cat > "${book%.*}.tsv" 
-done 
-```
+Each book representation is concatenated after a `id<TAB>text<TAB>title` header into a single stream, in which each line is preceded by a line number.
 
-Each book gets into an intermediate `tsv` representation of one "document" per line, being each one of these either an original paragraph, whole sentences of a long paragraph or a concatenation of short paragraphs or dialogue lines. 
-
-After processing each book, the seven intermediate representations are concatenated after a `id<TAB>text<TAB>title` header into a single stream, in which each line is preceded by a line number: 
-
-```
-cat Book*.tsv \ 
-  | nl \ 
-  | sed 's/^ *//g' \ 
-  | { echo -e 'id\ttext\ttitle'; cat; } \ 
-  | cat > corpus.tsv 
-```
-
-When the process finishes, the `corpus.tsv` file is ready to be used by PrimeQA's indexing feature. 
+The process outputs the result into `stdout`, so it can be redirected easily to a file, for example, `corpus.tsv`. When the process finishes, the file is ready to be used by PrimeQA's indexing feature. 
 
