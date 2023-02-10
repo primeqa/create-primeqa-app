@@ -48,7 +48,7 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
 <h3> 🧩 Installation </h3>
 
 1. Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be accessing via the browser. Otherwise, please use VNC to access the host.
-If accessig the application via the browser locally,  `PUBLIC_IP` can be set to `localhost`.
+If accessing the application via the browser locally,  `PUBLIC_IP` can be set to `localhost`.
 
     ```
     export PUBLIC_IP=<hostname>
@@ -110,7 +110,7 @@ If accessig the application via the browser locally,  `PUBLIC_IP` can be set to 
 	{
         "retrievers": {
             "PrimeQA": {
-                "service_endpoint": "primeqa:50051",
+                "service_endpoint": "primeqa:50051"
             }
         },
         "readers": {
