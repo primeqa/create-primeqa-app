@@ -4,7 +4,7 @@ services:
     image: primeqa/ui:0.0.2
     container_name: primeqa-ui
     ports:
-      - 82:82
+      - 82:8000
     environment:
       - API_URL=http://${PUBLIC_IP:-0.0.0.0}:50059
     depends_on:
