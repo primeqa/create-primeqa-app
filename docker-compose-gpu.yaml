@@ -1,16 +1,16 @@
 version: "3.3"
 services:
   application:
-    image: primeqa/ui:0.0.2
+    image: primeqa/ui:0.0.3
     container_name: primeqa-ui
     ports:
-      - 82:82
+      - 82:8000
     environment:
       - API_URL=http://${PUBLIC_IP:-0.0.0.0}:50059
     depends_on:
       - orchestrator
   orchestrator:
-    image: primeqa/orchestrator:0.0.2
+    image: primeqa/orchestrator:0.0.3
     container_name: primeqa-orchestrator
     ports:
       - 50059:50059
@@ -23,7 +23,7 @@ services:
     depends_on:
       - primeqa
   primeqa:
-    image: primeqa/services:0.9.9-gpu
+    image: primeqa/services:0.11.8-gpu
     container_name: primeqa-services
     ports:
       - 50051:50051
