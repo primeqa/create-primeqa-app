@@ -44,6 +44,22 @@ NVIDIA Driver version: 470.141.03
 
 Disk space: 50 GB is required for the docker, 25 GB of available free space is needed in the docker container storage
 
+
+<h3> 🧩 Release Notes </h3>
+
+<h4> 🧩 PrimeQA services v0.11.8 </h4>
+
+PrimeQA services now adds support for `BM25` and `DPR` Retrievers.
+
+The `information.json` file in the index directory must include an `engine_type` files set to one of `BM25`, `ColBERT` or `DPR`.
+
+If you have existing ColBERT indexes in `primeqa-store/indexes`, please update the `information.json` file in the index directory to include two additional fields:
+
+```
+"engine_type": ColBERT,
+"checkpoint": <checkpoint-dir-name>
+```
+
 <h3> 🧩 Installation </h3>
 
 1.  Set the environment variable `PUBLIC_IP` to the ip address of the localhost. This host must be reachable from where you will be accessing via the browser. Otherwise, please use VNC to access the host.
@@ -86,7 +102,6 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
      "retrievers": {
        "Watson Discovery": {
          "service_endpoint": "<IBM® Watson Discovery Cloud/CP4D Instance Endpoint>",
-         "service_token": "<Bearer token (ONLY If using IBM® Watson Discovery CP4D Instance)>",
          "service_api_key": "<API key (ONLY If using IBM® Watson Discovery Cloud instance)>",
          "service_project_id": "<IBM® Watson Discovery Project ID>"
        }
