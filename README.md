@@ -69,7 +69,7 @@ If you have existing ColBERT indexes in `primeqa-store/indexes`, please update t
         export PUBLIC_IP=<hostname>
         ```
 
-2.  Please ensure that the following three ports are free and available: `50051`, `50059` and `8000`
+2.  Please ensure that the following three ports are free and available: `50051`, `50059` and `82`
 
 3.  Launch the container using `bash` in `cpu` (default) or `gpu` mode:
 
@@ -233,7 +233,7 @@ If you have existing ColBERT indexes in `primeqa-store/indexes`, please update t
 
 <h2> 🥁 Usage </h2>
 
-You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:8000" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components. Some features include the ability to adjust settings and for users to provide feedback on retrieved answers.
+You can now open a browser of your choice (Mozilla Firefox/Google Chrome) and visit "http://{PUBLIC_IP}:82" to interact with the PrimeQA application. You will see our Retrieval, Reader and QuestionAnswering components. Some features include the ability to adjust settings and for users to provide feedback on retrieved answers.
 
 <h2> 💻 User Feedback </h2>
 
