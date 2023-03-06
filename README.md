@@ -53,11 +53,13 @@ PrimeQA services now adds support for `BM25` and `DPR` Retrievers.
 
 The `information.json` file in the index directory must include an `engine_type` files set to one of `BM25`, `ColBERT` or `DPR`.
 
-If you have existing ColBERT indexes in `primeqa-store/indexes`, please update the `information.json` file in the index directory to include two additional fields:
+If you have existing ColBERT indexes in `primeqa-store/indexes`, please update the `information.json` file in the index directory to include a configuration section as follows:
 
 ```
-"engine_type": ColBERT,
-"checkpoint": <checkpoint-dir-name>
+  "configuration": {
+    "engine_type": ColBERT,
+    "checkpoint": <checkpoint-dir-name>
+  }
 ```
 
 <h3> 🧩 Installation </h3>
