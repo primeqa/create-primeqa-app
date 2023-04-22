@@ -23,7 +23,7 @@ services:
     depends_on:
       - primeqa
   primeqa:
-    image: primeqa/services:0.14.2-cpu
+    image: primeqa/services:0.14.3-cpu
     container_name: primeqa-services
     ports:
       - 50051:50051

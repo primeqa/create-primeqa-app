@@ -47,7 +47,7 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
 
 <h3> 🧩 Release Notes </h3>
 
-<h4> 🧩 PrimeQA services v0.14.2 </h4>
+<h4> 🧩 PrimeQA services v0.14.3 with PrimeQA UI and Orchestrator v0.0.4 </h4>
 
 PrimeQA services now adds support for:
 
@@ -60,7 +60,7 @@ For more details:
 
 **Generative Readers**
 
-For more details:
+For more details on `GenerativeReader` and `PromptReader`:
 
 - [Generative Reader Components](https://github.com/primeqa/primeqa/tree/main/primeqa/components#generative-reader)
 
