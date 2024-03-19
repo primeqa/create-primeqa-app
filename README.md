@@ -47,6 +47,23 @@ Disk space: 50 GB is required for the docker, 25 GB of available free space is n
 
 <h3> 🧩 Release Notes </h3>
 
+<h4> 🧩 PrimeQA services v0.14.3 with PrimeQA UI and Orchestrator v0.0.4 </h4>
+
+PrimeQA services now adds support for:
+
+**Rerankers** 
+
+For more details:
+
+- [Reranker Component](https://github.com/primeqa/primeqa/tree/main/primeqa/components#reranker-components)
+- [ColBERT Reranker model](https://github.com/primeqa/primeqa/tree/main/primeqa/services#drop-in-a-reranker-model)
+
+**Generative Readers**
+
+For more details on `GenerativeReader` and `PromptReader`:
+
+- [Generative Reader Components](https://github.com/primeqa/primeqa/tree/main/primeqa/components#generative-reader)
+
 <h4> 🧩 PrimeQA services v0.11.8 </h4>
 
 PrimeQA services now adds support for `BM25` and `DPR` Retrievers.
